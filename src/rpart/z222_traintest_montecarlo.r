@@ -5,7 +5,8 @@ require("data.table")
 require("rpart")
 require("parallel")
 
-ksemillas  <- c(102191, 200177, 410551, 552581, 892237 ) #reemplazar por las propias semillas
+ksemillas  <- c(211283, 586909, 192991, 473167, 883343, 167569, 496969, 409843, 617429, 965909, 223153, 478979, 115789, 637087, 747839, 113357, 409567, 796297, 654097, 150431) #reemplazar por las propias semillas
+#c(167569, 496969, 409843, 617429, 965909, 223153, 478979, 115789, 637087, 747839, 113357, 409567, 796297, 654097, 150431, 958663, 713443, 155579, 752431, 728813)
 
 #------------------------------------------------------------------------------
 #particionar agrega una columna llamada fold a un dataset que consiste en una particion estratificada segun agrupa
@@ -61,7 +62,7 @@ ArbolEstimarGanancia  <- function( semilla, param_basicos )
 #------------------------------------------------------------------------------
 
 #Aqui se debe poner la carpeta de la computadora local
-setwd("X:\\gdrive\\austral2023v\\")   #Establezco el Working Directory
+setwd("D:/MCDAustral/Labo")   #Establezco el Working Directory
 #cargo los datos
 
 #cargo los datos
