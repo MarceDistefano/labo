@@ -1,4 +1,4 @@
-<<<<<<< Updated upstream
+
 # Experimentos Colaborativos Default
 # Workflow  ZZ proceso final
 
@@ -18,7 +18,7 @@ require("lightgbm")
 
 #Parametros del script
 PARAM  <- list()
-PARAM$experimento  <- "ZZ6910"
+PARAM$experimento  <- "ZZ6910Ninguno_semilla1"
 PARAM$exp_input  <- "HT6510"
 
 PARAM$modelos  <- 2       #aumentar si se quieren mas modelos
