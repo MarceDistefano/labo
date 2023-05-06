@@ -11,15 +11,15 @@ require("rpart")
 
 #parmatros experimento
 PARAM <- list()
-PARAM$experimento  <- 3211
+PARAM$experimento  <- 3217
 PARAM$semilla  <- 211283
       #Establezco la semilla aleatoria, cambiar por SU primer semilla
 
 #parameetros rpart
 PARAM$rpart_param   <- list( "cp"=          -1,
                               "minsplit"=  250,
-                              "minbucket"=  100,
-                              "maxdepth"=   8 )
+                              "minbucket"=  50,
+                              "maxdepth"=   10 )
 
 #parametros  arbol
 PARAM$feature_fraction  <- 0.5  #entreno cada arbol con solo 50% de las variables variables
@@ -52,6 +52,7 @@ grabar  <-  c( 1, 5, 10, 50, 100, 200, 500)
 #defino los dataset de entrenamiento y aplicacion
 dtrain  <- dataset[ foto_mes==202107 ]
 dapply  <- dataset[ foto_mes==202109 ]
+
 
 #aqui se va acumulando la probabilidad del ensemble
 dapply[ , prob_acumulada := 0 ]
