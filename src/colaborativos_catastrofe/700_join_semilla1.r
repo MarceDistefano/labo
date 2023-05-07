@@ -63,13 +63,4 @@ dataset_pred4 [, envios:= .I]
 
 #semilla 5
 
-dataset_pred5 <- fread ("~/buckets/b1/.exp/ZZ6910Ninguno_semilla5/pred_01_006.csv")
 
-dataset_pred5 [, ganancia:= -3000]
-dataset_pred5 [clase_ternaria== "BAJA+2", ganancia:= 117000]
-
-setorder(dataset_pred5, - prob)
-
-dataset_pred5 [, ganancia_acumulada: = cumsum(ganancia)]
-
-dataset_pred5 [, envios:= .I]
