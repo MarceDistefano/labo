@@ -8,6 +8,7 @@
 
 
 #limpio la memoria
+
 rm( list= ls(all.names= TRUE) )  #remove all objects
 gc( full= TRUE )                 #garbage collection
 
@@ -18,7 +19,7 @@ require("lightgbm")
 
 #Parametros del script
 PARAM  <- list()
-PARAM$experimento  <- "ZZ6910Estadistica_semilla1"
+PARAM$experimento  <- "ZZ6912Estadistica_semilla1"
 PARAM$exp_input  <- "HT6512Estadistico"
 
 PARAM$modelos  <- 1       #aumentar si se quieren mas modelos
