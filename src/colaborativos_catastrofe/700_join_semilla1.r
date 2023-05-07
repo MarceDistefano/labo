@@ -13,6 +13,10 @@ dataset_grande <- fread ("~/buckets/b1/.datasets/competencia_2023.csv.gz")
 
 dataset_pred1 <- fread ("~/buckets/b1/.exp/ZZ6910Ninguno_semilla1/pred_01_006.csv")
 
+dataset_pred[dataset_grande,
+             on= c("numero_de_cliente","foto_mes"),
+             clase_ternaria:=i.clase_ternaria]
+
 dataset_pred1 [, ganancia:= -3000]
 dataset_pred1 [clase_ternaria== "BAJA+2", ganancia:= 117000]
 
