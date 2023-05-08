@@ -61,38 +61,6 @@ dataset_pred3 [, ganancia_acumulada: = cumsum(ganancia)]
 
 dataset_pred3 [, envios:= .I]
 
-#semilla 4
+# Calcular el promedio de ganancia acumulada por envío
 
-dataset_pred4 <- fread ("~/buckets/b1/.exp/ZZ6912Estadistica_semilla4/pred_01_006.csv")
-
-dataset_pred4[dataset_grande,
-             on= c("numero_de_cliente","foto_mes"),
-             clase_ternaria:=i.clase_ternaria]
-
-dataset_pred4 [, ganancia:= -3000]
-dataset_pred4 [clase_ternaria== "BAJA+2", ganancia:= 117000]
-
-setorder(dataset_pred4, - prob)
-
-dataset_pred4 [, ganancia_acumulada: = cumsum(ganancia)]
-
-dataset_pred4 [, envios:= .I]
-
-#semilla 5
-
-dataset_pred5 <- fread ("~/buckets/b1/.exp/ZZ6912Estadistica_semilla5/pred_01_006.csv")
-
-dataset_pred5[dataset_grande,
-             on= c("numero_de_cliente","foto_mes"),
-             clase_ternaria:=i.clase_ternaria]
-
-dataset_pred5 [, ganancia:= -3000]
-dataset_pred5 [clase_ternaria== "BAJA+2", ganancia:= 117000]
-
-setorder(dataset_pred5, - prob)
-
-dataset_pred5 [, ganancia_acumulada: = cumsum(ganancia)]
-
-dataset_pred5 [, envios:= .I]
-
-
+promedio_ganancia <- rbindlist(list(dataset_pred1, dataset_pred2, dataset_pred3, dataset_pred4, dataset_pred5))[, .(promedio_ganancia = mean(ganancia_acumulada)), by = envios]
