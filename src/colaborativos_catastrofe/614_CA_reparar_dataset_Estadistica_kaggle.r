@@ -12,12 +12,12 @@ gc( full= TRUE )                 #garbage collection
 
 require("data.table")
 require("yaml")
-setwd("D:/MCDAustral/Labo" )
+
 
 #Parametros del script
 PARAM  <- list()
 PARAM$experimento  <- "CA6200_estadistico_kaggle"
-PARAM$dataset  <- ( "./datasets/dataset_pequeno.csv")
+PARAM$dataset  <- "./datasets/competencia_2023.csv.gz"
 
 PARAM$metodo  <- "EstadisticaClasica"     #valores posibles  "MachineLearning"  "EstadisticaClasica" "Ninguno"
 # FIN Parametros del script
