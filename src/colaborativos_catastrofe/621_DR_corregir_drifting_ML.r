@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 # Experimentos Colaborativos Default
 # Workflow  Data Drifting repair
 
@@ -17,7 +16,7 @@ require("yaml")
 
 #Parametros del script
 PARAM  <- list()
-PARAM$experimento  <- "DR6210"
+PARAM$experimento  <- "DR6210ML"
 
 PARAM$exp_input  <- "CA6110ML"
 
