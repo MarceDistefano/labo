@@ -1,4 +1,4 @@
-<<<<<<< Updated upstream
+
 # Experimentos Colaborativos Default
 # Workflow  Catastrophe Analysis
 
