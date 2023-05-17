@@ -16,9 +16,9 @@ require("yaml")
 
 #Parametros del script
 PARAM  <- list()
-PARAM$experimento  <- "DR6210"
+PARAM$experimento  <- "PDR20"
 
-PARAM$exp_input  <- "CA6110"
+PARAM$exp_input  <- "PCA10"
 
 PARAM$variables_intrames  <- TRUE   # atencion eesto esta en TRUEEEEEE
 
@@ -104,6 +104,18 @@ AgregarVariables_IntraMes  <- function( dataset )
   dataset[ , vmr_mpagominimo         := vm_mpagominimo  / vm_mlimitecompra ]
 
   #Aqui debe usted agregar sus propias nuevas variables
+  #total prestamos
+
+   dataset[  , mprestamos_totales  := mprestamos_personales+ mprestamos_prendarios + mprestamos_hipotecarios ]
+
+   #establezco un umbral
+
+   dataset[  , mumbral_prestamos  := mpayroll*3 ]
+
+   #filtro
+
+   dataset_filtrado <- dataset[mprestamos_totales <= mumbral_prestamos]
+
 
   #valvula de seguridad para evitar valores infinitos
   #paso los infinitos a NULOS
