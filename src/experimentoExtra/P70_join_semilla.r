@@ -11,11 +11,12 @@ dataset_grande <- fread ("~/buckets/b1/datasets/competencia_2023.csv.gz")
 
 #semilla1
 
-dataset_pred1 <- fread ("~/buckets/b1/exp/ZZ6920_ML07/pred_01_043_s192991.csv")
+dataset_pred1 <- fread ("~/buckets/b1/exp/PZZ60/pred_01_007_s192991.csv")
 
-dataset_pred[dataset_grande,
-             on= c("numero_de_cliente","foto_mes"),
-             clase_ternaria:=i.clase_ternaria]
+dataset_pred1[dataset_grande,
+              on = c("numero_de_cliente", "foto_mes"),
+              mprestamos_totales := ifelse(mprestamos_totales < umbral_prestamos, i.mprestamos_totales, mprestamos_totales)]
+
 
 dataset_pred1 [, ganancia:= -3000]
 dataset_pred1 [clase_ternaria== "BAJA+2", ganancia:= 117000]
