@@ -7,7 +7,32 @@ gc( full= TRUE )                 #garbage collection
 require("data.table")
 
 
-dataset_grande <- fread ("~/buckets/b1/datasets/competencia_2023.csv.gz")
+dataset_grande <- fread ("~/buckets/b1/exp/PTS40/dataset_future.csv.gz")
+
+
+# agrego a dataset_pred1  las columnas  mprestamos_totales y  umbral_prestamos
+dataset_pred1[dataset_grande,
+                                  on = c("numero_de_cliente", "foto_mes"),
+                                   c( "mprestamos_totales", "mumbral_prestamos") := list( i.mprestamos_totales, i.mumbral_prestamos) ]
+
+#ordeno por probabilidad descendente
+setorder(  dataset_pred1,  -prob )  # ordeno por probabilidad descendente
+
+# marco todos en cero
+dataset_pred1[  , Predicted := 0 ]
+
+# marco en 1 a los primeros 11000  , cambiar luego a gusto, ya está ordenado !
+dataset_pred1[ 1:11000,  Predicted := 1 ]
+
+#ahora viene el  "Engendro Marcela"  ,  donde decido NO enviar estimulo a los que deben mucho
+
+dataset_pred1[  mprestamos_totales  >  mumbral_prestamos,  Predicted :=0 ]
+
+#finalmente, grabo a disco
+fwrite( dataset_pred1[ , list( numero_de_cliente, Predicted ) ],
+                file= "marcela_bola_de_cristal_11000.csv",
+                sep= "," )
+
 
 #semilla1
 
