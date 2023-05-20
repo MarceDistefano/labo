@@ -8,12 +8,13 @@ require("data.table")
 
 
 dataset_grande <- fread ("~/buckets/b1/exp/PTS40/dataset_future.csv.gz")
+dataset_pred1 <- fread ("~/buckets/b1/exp/PZZ60/pred_01_007_s192991.csv")
 
 
 # agrego a dataset_pred1  las columnas  mprestamos_totales y  umbral_prestamos
 dataset_pred1[dataset_grande,
                                   on = c("numero_de_cliente", "foto_mes"),
-                                   c( "mprestamos_totales", "mumbral_prestamos") := list( i.mprestamos_totales, i.mumbral_prestamos) ]
+                                   c( "mprestamos_totales_rank", "mumbral_prestamos_rank") := list( i.mprestamos_totales_rank, i.mumbral_prestamos_rank) ]
 
 #ordeno por probabilidad descendente
 setorder(  dataset_pred1,  -prob )  # ordeno por probabilidad descendente
@@ -21,120 +22,123 @@ setorder(  dataset_pred1,  -prob )  # ordeno por probabilidad descendente
 # marco todos en cero
 dataset_pred1[  , Predicted := 0 ]
 
-# marco en 1 a los primeros 11000  , cambiar luego a gusto, ya está ordenado !
-dataset_pred1[ 1:11000,  Predicted := 1 ]
+# marco en 1 a los primeros 10500  , cambiar luego a gusto, ya está ordenado !
+dataset_pred1[ 1:10500,  Predicted := 1 ]
 
 #ahora viene el  "Engendro Marcela"  ,  donde decido NO enviar estimulo a los que deben mucho
 
-dataset_pred1[  mprestamos_totales  >  mumbral_prestamos,  Predicted :=0 ]
+dataset_pred1[  mprestamos_totales_rank  >  mumbral_prestamos_rank,  Predicted :=0 ]
 
 #finalmente, grabo a disco
 fwrite( dataset_pred1[ , list( numero_de_cliente, Predicted ) ],
-                file= "marcela_bola_de_cristal_11000.csv",
+                file= "marcela_bola_de_cristal_10500.csv",
                 sep= "," )
 
 
-#semilla1
-
-dataset_pred1 <- fread ("~/buckets/b1/exp/PZZ60/pred_01_007_s192991.csv")
-
-dataset_pred1[dataset_grande,
-              on = c("numero_de_cliente", "foto_mes"),
-              mprestamos_totales := ifelse(mprestamos_totales < umbral_prestamos, i.mprestamos_totales, mprestamos_totales)]
-
-
-dataset_pred1 [, ganancia:= -3000]
-dataset_pred1 [clase_ternaria== "BAJA+2", ganancia:= 117000]
-
-setorder(dataset_pred1, - prob)
-
-dataset_pred1 [, ganancia_acumulada:= cumsum(ganancia)]
-
-dataset_pred1 [, envios:= .I]
-
 #semilla 2
 
-dataset_pred2 <- fread ("~/buckets/b1/exp/ZZ6920_ML07/pred_01_043_s211283.csv")
+dataset_pred2 <- fread ("~/buckets/b1/exp/PZZ60/pred_01_007_s211283.csv")
 
-dataset_pred2 [, ganancia:= -3000]
-dataset_pred2 [clase_ternaria== "BAJA+2", ganancia:= 117000]
 
-setorder(dataset_pred2, - prob)
 
-dataset_pred2 [, ganancia_acumulada:= cumsum(ganancia)]
+dataset_pred2[dataset_grande,
+              on = c("numero_de_cliente", "foto_mes"),
+              c( "mprestamos_totales_rank", "mumbral_prestamos_rank") := list( i.mprestamos_totales_rank, i.mumbral_prestamos_rank) ]
 
-dataset_pred2 [, envios:= .I]
+
+setorder(  dataset_pred1,  -prob )  # ordeno por probabilidad descendente
+
+
+dataset_pred2[  , Predicted := 0 ]
+
+# marco en 1 a los primeros 10500  , cambiar luego a gusto, ya está ordenado !
+dataset_pred1[ 1:10500,  Predicted := 1 ]
+
+
+dataset_pred2[  mprestamos_totales_rank  >  mumbral_prestamos_rank,  Predicted :=0 ]
+
+#finalmente, grabo a disco
+fwrite( dataset_pred2[ , list( numero_de_cliente, Predicted ) ],
+        file= "marcela_bola_de_cristal2_10500.csv",
+        sep= "," )
 
 #semilla 3
 
-dataset_pred3 <- fread ("~/buckets/b1/exp/ZZ6920_ML07/pred_01_043_s473167.csv")
+dataset_pred3 <- fread ("~/buckets/b1/exp/PZZ60/pred_01_007_s473167.csv")
 
-dataset_pred3 [, ganancia:= -3000]
-dataset_pred3 [clase_ternaria== "BAJA+2", ganancia:= 117000]
 
-setorder(dataset_pred3, - prob)
 
-dataset_pred3 [, ganancia_acumulada:= cumsum(ganancia)]
+dataset_pred3[dataset_grande,
+              on = c("numero_de_cliente", "foto_mes"),
+              c( "mprestamos_totales_rank", "mumbral_prestamos_rank") := list( i.mprestamos_totales_rank, i.mumbral_prestamos_rank) ]
 
-dataset_pred3 [, envios:= .I]
+
+setorder(  dataset_pred3,  -prob )  # ordeno por probabilidad descendente
+
+
+dataset_pred3[  , Predicted := 0 ]
+
+# marco en 1 a los primeros 10500  , cambiar luego a gusto, ya está ordenado !
+dataset_pred3[ 1:10500,  Predicted := 1 ]
+
+
+dataset_pred3[  mprestamos_totales_rank  >  mumbral_prestamos_rank,  Predicted :=0 ]
+
+#finalmente, grabo a disco
+fwrite( dataset_pred3[ , list( numero_de_cliente, Predicted ) ],
+        file= "marcela_bola_de_cristal3_10500.csv",
+        sep= "," )
 
 #semilla 4
 
-dataset_pred4 <- fread ("~/buckets/b1/exp/ZZ6920_ML07/pred_01_043_s586909.csv")
+dataset_pred4 <- fread ("~/buckets/b1/exp/PZZ60/pred_01_007_s586909.csv")
 
-dataset_pred4 [, ganancia:= -3000]
-dataset_pred4 [clase_ternaria== "BAJA+2", ganancia:= 117000]
 
-setorder(dataset_pred4, - prob)
 
-dataset_pred4 [, ganancia_acumulada:= cumsum(ganancia)]
+dataset_pred4[dataset_grande,
+              on = c("numero_de_cliente", "foto_mes"),
+              c( "mprestamos_totales_rank", "mumbral_prestamos_rank") := list( i.mprestamos_totales_rank, i.mumbral_prestamos_rank) ]
 
-dataset_pred4 [, envios:= .I]
+
+setorder(  dataset_pred4,  -prob )  # ordeno por probabilidad descendente
+
+
+dataset_pred4[  , Predicted := 0 ]
+
+# marco en 1 a los primeros 10500  , cambiar luego a gusto, ya está ordenado !
+dataset_pred4[ 1:10500,  Predicted := 1 ]
+
+
+dataset_pred4[  mprestamos_totales_rank  >  mumbral_prestamos_rank,  Predicted :=0 ]
+
+
+fwrite( dataset_pred4[ , list( numero_de_cliente, Predicted ) ],
+        file= "marcela_bola_de_cristal4_10500.csv",
+        sep= "," )
 
 #semilla 5
 
-dataset_pred5 <- fread ("~/buckets/b1/exp/ZZ6920_ML07/pred_01_043_s883343.csv")
-
-dataset_pred5 [, ganancia:= -3000]
-dataset_pred5 [clase_ternaria== "BAJA+2", ganancia:= 117000]
-
-setorder(dataset_pred5, - prob)
-
-dataset_pred5 [, ganancia_acumulada:= cumsum(ganancia)]
-
-dataset_pred5 [, envios:= .I]
-
-# Calcular el promedio de ganancia acumulada por envío
-
-promedio_ganancia <- rbindlist(list(dataset_pred1, dataset_pred2, dataset_pred3, dataset_pred4, dataset_pred5))[, .(ganancia_media = mean(ganancia_acumulada)), by = envios]
-
-#Gráfico
-
-library(ggplot2)
+dataset_pred5 <- fread ("~/buckets/b1/exp/PZZ60/pred_01_007_s883343.csv")
 
 
-# Subconjunto de datos para el gráfico (hasta 20,000 envíos)
 
-data_plot <- promedio_ganancia[promedio_ganancia$envios <= 20000, ]
+dataset_pred5[dataset_grande,
+              on = c("numero_de_cliente", "foto_mes"),
+              c( "mprestamos_totales_rank", "mumbral_prestamos_rank") := list( i.mprestamos_totales_rank, i.mumbral_prestamos_rank) ]
 
-# Gráfico de ganancias acumuladas en función del número de envíos
 
-#ggplot(data_plot, aes(x = envios, y = ganancia_media)) +
-  #geom_line(size = 1, alpha = 0.7) +
- # xlab("Número de envíos") +
-  #ylab("Ganancia ") +
-  #ggtitle("Promedio de Ganancias (por semillas)  en función del número de envíos")
+setorder(  dataset_pred5,  -prob )  # ordeno por probabilidad descendente
 
-ggplot(data_plot, aes(x = envios, y = ganancia_media)) +
-  geom_line(size = 1, alpha = 0.7) +
-  scale_color_viridis_d() +
-  scale_y_continuous(labels = scales::unit_format(unit = "M", scale = 1e-6)) +
-  xlab("Número de envíos") +
-  ylab("Ganancia (millones)") +
-  ggtitle("Promedio de Ganancias en función del número de envíos") +
-  theme_minimal() +
-  theme(plot.title = element_text(face = "bold", size = 16, color = "blue"),
-        axis.title = element_text(face = "bold", size = 14),
-        legend.title = element_blank(),
-        legend.text = element_text(size = 12, color = "gray"))
 
+dataset_pred5[  , Predicted := 0 ]
+
+# marco en 1 a los primeros 10500  , cambiar luego a gusto, ya está ordenado !
+dataset_pred5[ 1:10500,  Predicted := 1 ]
+
+
+dataset_pred5[  mprestamos_totales_rank  >  mumbral_prestamos_rank,  Predicted :=0 ]
+
+#finalmente, grabo a disco
+fwrite( dataset_pred5[ , list( numero_de_cliente, Predicted ) ],
+        file= "marcela_bola_de_cristal5_10500.csv",
+        sep= "," )
