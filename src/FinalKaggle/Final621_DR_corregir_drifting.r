@@ -16,15 +16,34 @@ require("yaml")
 
 #Parametros del script
 PARAM  <- list()
-PARAM$experimento  <- "DR6210"
+PARAM$experimento  <- "FINALDR_KAGGLE"
 
-PARAM$exp_input  <- "CA6110"
+PARAM$exp_input  <- "PCA610"
 
 PARAM$variables_intrames  <- TRUE   # atencion eesto esta en TRUEEEEEE
 
 #valores posibles  "ninguno" "rank_simple" , "rank_cero_fijo" , "deflacion"
-PARAM$metodo  <- "rank_cero_fijo"
+PARAM$metodo  <- "ninguno"
+
+
+PARAM$home  <- "~/buckets/b1/"
 # FIN Parametros del script
+
+OUTPUT  <- list()
+
+#------------------------------------------------------------------------------
+
+options(error = function() { 
+  traceback(20); 
+  options(error = NULL); 
+  stop("exiting after script error") 
+})
+#------------------------------------------------------------------------------
+
+GrabarOutput  <- function()
+{
+  write_yaml( OUTPUT, file= "output.yml" )   # grabo output
+}
 
 
 #------------------------------------------------------------------------------
@@ -104,6 +123,9 @@ AgregarVariables_IntraMes  <- function( dataset )
   dataset[ , vmr_mpagominimo         := vm_mpagominimo  / vm_mlimitecompra ]
 
   #Aqui debe usted agregar sus propias nuevas variables
+
+ dataset[  , ratio_transferencias := mtransferencias_emitidas
+ / (mpayroll+ mpayroll2)]
 
   #valvula de seguridad para evitar valores infinitos
   #paso los infinitos a NULOS
@@ -237,10 +259,27 @@ fwrite( dataset,
         sep= "," )
 
 #------------------------------------------------------------------------------
-PARAM$stat$time_end  <- format(Sys.time(), "%Y%m%d %H%M%S")
-write_yaml( PARAM, file= "parametros.yml" )   #escribo parametros utilizados
+# guardo los campos que tiene el dataset
+tb_campos  <- as.data.table( list( "pos" = 1:ncol(dataset),
+                                   "campo"= names(sapply( dataset, class )),
+                                   "tipo"= sapply( dataset, class ),
+                                   "nulos"= sapply( dataset,  function(x){ sum(is.na(x)) } ),
+                                   "ceros"= sapply( dataset,  function(x){ sum(x==0,na.rm= TRUE) } ) ))
+
+fwrite( tb_campos,
+        file= "dataset.campos.txt",
+        sep= "\t" )
+
+
+#------------------------------------------------------------------------------
+OUTPUT$dataset$ncol  <- ncol(dataset)
+OUTPUT$dataset$nrow  <- nrow(dataset)
+OUTPUT$time$end  <- format(Sys.time(), "%Y%m%d %H%M%S")
+GrabarOutput()
 
 #dejo la marca final
 cat( format(Sys.time(), "%Y%m%d %H%M%S"),"\n",
      file= "zRend.txt",
      append= TRUE  )
+
+
