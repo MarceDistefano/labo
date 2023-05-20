@@ -18,7 +18,7 @@ require("yaml")
 PARAM  <- list()
 PARAM$experimento  <- "FINALDR_KAGGLE"
 
-PARAM$exp_input  <- "PCA610"
+PARAM$exp_input  <- CFINALCA610"
 
 PARAM$variables_intrames  <- TRUE   # atencion eesto esta en TRUEEEEEE
 
