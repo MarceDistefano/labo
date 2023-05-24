@@ -32,7 +32,7 @@ require("lightgbm")
 #Parametros del script
 PARAM  <- list()
 PARAM$experimento  <- "FINAL_SEMILLERIO_!_ZZ7920"
-PARAM$exp_input  <- "FINALHT_KAGGLE"
+PARAM$exp_input  <- "   
 
 #Atencion, que cada modelos se procesa con 5 semillas, ajuste a SUS necesidades
 PARAM$modelos_rank  <- c( 1 )  #Que modelos quiero, segun su posicion en el ranking e la Bayesian Optimizacion, ordenado por ganancia descendente
